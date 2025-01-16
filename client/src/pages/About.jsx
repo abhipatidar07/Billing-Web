@@ -5,7 +5,7 @@ import aka from "../assets/images/Aka.jpg"
 
 const About = () => {
   return (
-    <div>
+    <div>  
     <div className="bg-gray-50 min-h-screen py-16 px-6">
       <div className="max-w-7xl mx-auto">
         {/* Header Section */}
