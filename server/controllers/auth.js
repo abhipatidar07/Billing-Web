@@ -101,13 +101,15 @@ exports.login = async (req, res) => {
         message: "Please register Yourself then login again",
       });
     }
-
+  //  console.log(user.profileDetails)
     //if user is presesnt then generate teh token and store the token in user schema
     if (await bcrypt.compare(password, user.password)) {
       const token = jwt.sign(
         {
           email: user.email,
           id: user._id,
+          // profileDetails: user.profileDetails,
+          // bills: user.bills,
           name: user.fullName,
           phoneNo: user.phoneNo,
         },

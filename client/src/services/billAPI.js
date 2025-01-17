@@ -34,7 +34,7 @@
 // }
 
 import { useSelector } from "react-redux";
-import { setAllBill, setBillData } from "../slices/billSlice";
+import { setAllBill, setBillData, setLoading } from "../slices/billSlice";
 import { apiConnector } from "./apiConnector";
 import { endpoints } from "./apis";
 import toast from "react-hot-toast";
@@ -47,6 +47,8 @@ const { BILL_API,GET_ALL_BILL_API } = endpoints;
 
 export function createBill(formData, total, grandTotal,navigate) {
   return async (dispatch) => {
+    dispatch(setLoading(true));
+    
     const token = localStorage.getItem("token");
         if (!token) {
             console.error("Token not found");
@@ -80,6 +82,7 @@ export function createBill(formData, total, grandTotal,navigate) {
       } else {
         throw new Error(response.data.message || "Failed to create bill");
       }
+      dispatch(setLoading(false));
     } catch (error) {
       console.error("BILL API ERROR:", error.message);
       toast.error(error.message || "Failed to create bill");
@@ -121,6 +124,7 @@ export function getBills(info, navigate) {
         toast.success('All bills fetched');
         console.log(response);
         dispatch(setAllBill(response.data.bills)); // Dispatch fetched bills
+        // localStorage.setItem("allBill",JSON.stringify(response.data.bills))
       } else {
         throw new Error(response.data.message || 'Failed to fetch bills');
       }

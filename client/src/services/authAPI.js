@@ -1,6 +1,6 @@
 import { toast } from "react-hot-toast";
 
-import { setLoading, setSignupData, setToken } from "../slices/authSlice";
+import { setLoading, setSignupData, setToken,setUser  } from "../slices/authSlice";
 import { apiConnector } from "./apiConnector";
 import { endpoints } from "./apis";
 import { useNavigate } from "react-router-dom";
@@ -32,6 +32,7 @@ export function signup(
         throw new Error(response.data.message);
       } else {
         toast.success("Signup Successfully!");
+        dispatch(setUser(response));
         navigate("/login");
       }
       dispatch(setLoading(false));
@@ -64,6 +65,7 @@ export function login(email, password, navigate) {
 
       dispatch(setToken(response.data.token));
       localStorage.setItem("token", JSON.stringify(response.data.token));
+      localStorage.setItem("user", JSON.stringify(response.data.user));
       navigate("/inside-profile");
     } catch (error) {
       console.log("Login API ERROR............", error);
@@ -87,6 +89,11 @@ export function logout(navigate) {
 
     // Clear token from localStorage (if used)
     localStorage.removeItem("token");
+    localStorage.removeItem("billData");
+    localStorage.removeItem("allBill");
+    localStorage.removeItem("profileData");
+    localStorage.removeItem("billDatas");
+    localStorage.removeItem("user");
 
     // Optional: Clear any session storage if used
     sessionStorage.clear();

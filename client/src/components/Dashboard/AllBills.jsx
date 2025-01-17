@@ -420,7 +420,7 @@ const AllBills = () => {
       </div>
 
       <div>
-        {allBill && allBill.length > 0 ? (
+        {allBill && allBill.length > 0  ? (
           allBill.map((bill, index) => (
             <div
               ref={billRef}
